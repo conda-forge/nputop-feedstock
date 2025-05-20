@@ -14,7 +14,7 @@ build:
   script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
   entry_points:
     - nputop = nputop.cli:main
-  skip: True  # [not linux]
+  skip: True  # [win or osx]
 
 requirements:
   build:
