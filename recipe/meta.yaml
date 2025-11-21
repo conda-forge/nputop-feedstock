@@ -1,5 +1,5 @@
 {% set name = "nputop" %}
-{% set version = "0.0.4" %}
+{% set version = "0.0.5" %}
 
 package:
   name: {{ name|lower }}
@@ -7,14 +7,14 @@ package:
 
 source:
   url: https://github.com/youyve/nputop/archive/v{{ version }}.tar.gz
-  sha256: c0650244af08d5006936738147f900c5de653cccd0972199306fd372f8e5b1d2
+  sha256: 0e7a2a53d3692633388334910805529553bee6483002229b2cfbdecafff1659e
 
 build:
-  number: 2
+  number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
   entry_points:
     - nputop = nputop.cli:main
-  skip: True  # [win or osx]
+  skip: true  # [win or osx]
 
 requirements:
   build:
