@@ -10,7 +10,7 @@ source:
   sha256: 0e7a2a53d3692633388334910805529553bee6483002229b2cfbdecafff1659e
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
   entry_points:
     - nputop = nputop.cli:main
