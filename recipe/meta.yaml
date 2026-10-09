@@ -11,19 +11,19 @@ source:
 
 build:
   number: 0
-  skip: true  # [win or osx]
+  skip: true  # [win or osx or py<37]
   script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
   entry_points:
     - nputop = nputop.cli:main
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
     - setuptools >=61
     - wheel
   run:
-    - python >=3.7
+    - python
     - psutil >=5.6.6
     - cachetools >=1.0.1
     - termcolor >=1.0.0
