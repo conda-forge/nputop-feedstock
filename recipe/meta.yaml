@@ -1,28 +1,29 @@
 {% set name = "nputop" %}
-{% set version = "0.0.5" %}
+{% set version = "0.1.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/youyve/nputop/archive/v{{ version }}.tar.gz
-  sha256: 0e7a2a53d3692633388334910805529553bee6483002229b2cfbdecafff1659e
+  url: https://pypi.org/packages/source/a/ascend-nputop/ascend_nputop-{{ version }}.tar.gz
+  sha256: 1664e9a570ef0de4e5598c2a8d6887ea9468f0398fd2df33e6281bce2f48a8ce
 
 build:
-  number: 1
+  number: 0
+  skip: true  # [win or osx]
   script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
   entry_points:
     - nputop = nputop.cli:main
-  skip: true  # [win or osx]
 
 requirements:
-  build:
-    - python
-    - setuptools
+  host:
+    - python >=3.7
     - pip
+    - setuptools >=61
+    - wheel
   run:
-    - python
+    - python >=3.7
     - psutil >=5.6.6
     - cachetools >=1.0.1
     - termcolor >=1.0.0
@@ -30,17 +31,26 @@ requirements:
 test:
   imports:
     - nputop
+    - nputop.api.libdcmi
+    - nputop.gui.monitor
   commands:
-    - nputop --version || echo "Skipping hardware-dependent test"
+    - nputop --version
+    - nputop --help
+    - nputop --preview --version
+    - nputop --legacy-ui --help
+    - python -c "from nputop.version import __version__; assert __version__ == '{{ version }}'"
 
 about:
   home: https://github.com/youyve/nputop
-  license: Apache-2.0
-  license_file: LICENSE
-  summary: 'nputop: Interactive Ascend-NPU Process Viewer'
+  license: Apache-2.0 AND GPL-3.0-only
+  license_file:
+    - LICENSE
+    - COPYING
+    - NOTICE
+  summary: An interactive Ascend NPU and process monitor
   description: |
-    nputop is an interactive process viewer for Ascend-NPU, providing real-time monitoring of NPU metrics and processes.
-    Note: Currently supports Linux only. Requires manual installation of Ascend-NPU drivers (see project documentation).
+    Monitor Ascend devices and processes through DCMI or npu-smi.
+    Live telemetry requires Linux and an installed Ascend driver.
   doc_url: https://github.com/youyve/nputop
   dev_url: https://github.com/youyve/nputop
 
